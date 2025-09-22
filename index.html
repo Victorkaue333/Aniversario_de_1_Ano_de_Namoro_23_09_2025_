@@ -40,6 +40,7 @@
             
             <a href="#inicio" class="hero-button">Relembre nossa história</a>
         </div>
+        <a href="#inicio" class="scroll-down-arrow"></a>
     </header>
 
     <nav class="main-nav">
@@ -47,7 +48,7 @@
             <li><a href="index.html" class="active">Início</a></li>
             <li><a href="nossa-historia.html">Nossa História</a></li>
             <li><a href="galeria.html">Galeria</a></li>
-            <li><a href="motivos.html">Por que Eu Te Amo</a></li>
+            <li><a href="motivos.html">Por que Eu Te Amo?</a></li>
             <li><a href="futuro.html">Nosso Futuro</a></li>
         </ul>
     </nav>
@@ -55,7 +56,10 @@
     <main id="inicio">
         <section class="intro-section">
             <div class="container fade-in">
-                <h2>Para Minha Giselle, o amor da minha vida!</h2>
+                <div class="dedication-card">
+                    <div id="dedication-text"></div>
+                </div>
+                
                 <p>
                     Há um ano, nossas vidas se cruzaram de uma forma que eu jamais poderia imaginar. Este site é um pequeno presente para celebrar cada risada, cada abraço e cada momento que construímos juntos. É um reflexo do meu amor por você e da felicidade que você trouxe para os meus dias.
                 </p>
@@ -72,41 +76,48 @@
                     <div class="highlight-card slide-up">
                         <img src="images/6.jpg" alt="Ilustração do primeiro encontro">
                         <h3>O Início de Tudo</h3>
-                        <p>Lembra do nosso primeiro encontro? Onde tudo começou e um novo capítulo se abriu.</p>
-                        <a href="nossa-historia.html" class="card-link">Ver mais &rarr;</a>
+                        <p>A nossa linha do tempo, desde o dia em que tudo começou e um novo capítulo se abriu.</p>
+                        <a href="nossa-historia.html" class="card-link">Ver nossa história &rarr;</a>
                     </div>
                     <div class="highlight-card slide-up">
                         <img src="images/31.jpg" alt="Ilustração de uma viagem especial">
                         <h3>Aventuras Inesquecíveis</h3>
-                        <p>As viagens e momentos que viraram as melhores histórias para contar.</p>
-                        <a href="galeria.html" class="card-link">Ver galeria &rarr;</a>
+                        <p>Uma galeria com os momentos que viraram as melhores histórias para contar.</p>
+                        <a href="galeria.html" class="card-link">Ver nossa galeria &rarr;</a>
                     </div>
                     <div class="highlight-card slide-up">
                         <img src="images/9.jpg" alt="Ilustração do casal olhando o horizonte">
                         <h3>O Que Vem Pela Frente</h3>
                         <p>Os sonhos que compartilhamos e o futuro brilhante que estamos construindo juntos.</p>
-                        <a href="futuro.html" class="card-link">Nossos planos &rarr;</a>
+                        <a href="futuro.html" class="card-link">Ver nossos planos &rarr;</a>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <section class="invitation-section">
+            <div class="invitation-content">
+                <h2>Um Convite Especial</h2>
+                <p>Este é apenas o começo. Cada página guarda um pedaço do meu amor por você. Explore cada uma delas e reviva comigo a alegria do nosso primeiro ano.</p>
+                <a href="nossa-historia.html" class="hero-button">Começar a explorar</a>
             </div>
         </section>
     </main>
 
     <footer>
-        <p>Feito com todo o amor do mundo por Victor.</p>
+        <p>Feito com todo o amor do mundo por Victor Kauê.</p>
         <p>© 2025 - Todos os direitos reservados ao nosso amor.</p>
     </footer>
 
     <script>
+        // Script do contador animado
         const counters = document.querySelectorAll('.stat-number');
-        const speed = 200; // Ajuste a velocidade da animação
-
+        const speed = 200;
         counters.forEach(counter => {
             const animate = () => {
                 const target = +counter.getAttribute('data-target');
                 const count = +counter.innerText;
                 const increment = Math.ceil(target / speed);
-
                 if (count < target) {
                     counter.innerText = count + increment;
                     setTimeout(animate, 10);
@@ -116,6 +127,34 @@
             }
             animate();
         });
+
+        // NOVO SCRIPT: Animação de máquina de escrever
+        const dedicationElement = document.getElementById('dedication-text');
+        const lines = [
+            "De: Victor Kauê, seu amor!",
+            "Para: Minha Giselle, o amor da minha vida!",
+        ];
+        let lineIndex = 0;
+        let charIndex = 0;
+
+        function typeWriter() {
+            if (lineIndex < lines.length) {
+                if (charIndex < lines[lineIndex].length) {
+                    dedicationElement.innerHTML += lines[lineIndex].charAt(charIndex);
+                    charIndex++;
+                    setTimeout(typeWriter, 50); // Velocidade da digitação
+                } else {
+                    dedicationElement.innerHTML += '<br>';
+                    lineIndex++;
+                    charIndex = 0;
+                    setTimeout(typeWriter, 500); // Pausa entre as linhas
+                }
+            } else {
+                // Remove o cursor piscando no final
+                dedicationElement.style.borderRight = 'none';
+            }
+        }
+        window.addEventListener('load', typeWriter);
     </script>
 
 </body>
