@@ -29,7 +29,7 @@ body {
     background-color: var(--background-color);
     color: var(--text-color);
     line-height: 1.7;
-    overflow-x: hidden; /* Previne scroll horizontal causado por animações */
+    /* REMOVIDO: overflow-x: hidden; - para não mascarar problemas de layout */
 }
 
 .container {
@@ -173,11 +173,15 @@ footer {
     text-align: center;
     color: white;
     position: relative;
+    padding: 0 20px;
 }
 .hero-content { animation: fadeIn 2s 0.5s ease-in-out forwards; opacity: 0; }
-.hero-title { font-size: 5rem; margin-bottom: 0.5rem; }
+.hero-title {
+    font-size: clamp(3rem, 10vw, 5rem); /* Fonte Fluída */
+    margin-bottom: 0.5rem;
+}
 .hero-subtitle { font-size: 1.5rem; font-weight: 300; margin-bottom: 2rem; }
-.hero-stats-container { display: flex; justify-content: center; gap: 30px; margin: 1rem 0 0.5rem 0; flex-wrap: wrap; }
+.hero-stats-container { display: flex; justify-content: center; gap: 20px; margin: 1rem 0 0.5rem 0; flex-wrap: wrap; }
 .stat-item { text-align: center; }
 .stat-number { font-family: var(--font-headings); font-size: 2.5rem; font-weight: 700; color: var(--primary-color); display: block; }
 .stat-label { font-size: 0.9rem; color: #ccc; text-transform: uppercase; letter-spacing: 1px; }
@@ -252,8 +256,7 @@ footer {
     text-align: center;
 }
 .invitation-content h2 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+    font-size: clamp(2.2rem, 8vw, 3rem); /* Fonte Fluída */
 }
 .invitation-content p {
     max-width: 600px;
@@ -261,8 +264,7 @@ footer {
     font-size: 1.2rem;
 }
 
-/* --- Estilos das Outras Páginas --- */
-/* ... (todos os outros estilos para timeline, galeria, motivos, futuro, etc.) ... */
+/* --- Estilos das Outras Páginas (Genérico) --- */
 .timeline { position: relative; max-width: 800px; margin: 0 auto; }
 .timeline::after { content: ''; position: absolute; width: 4px; background-color: var(--primary-color); top: 0; bottom: 0; left: 50%; margin-left: -2px; opacity: 0.2; }
 .timeline-item { padding: 10px 40px; position: relative; width: 50%; }
@@ -275,9 +277,13 @@ footer {
 .timeline-content h2 { font-size: 2rem; }
 .timeline-content .timeline-image {
     width: 100%;
+    /* Ajuste para garantir que a imagem não seja cortada e preencha o espaço */
+    max-width: 100%; 
+    height: auto; /* Garante que a proporção da imagem seja mantida */
     border-radius: 6px;
     margin: 15px 0;
     transition: transform var(--transition-speed), filter var(--transition-speed);
+    display: block; /* Garante que ela se comporte como um bloco para margin auto funcionar */
 }
 .timeline-content:hover .timeline-image {
     transform: scale(1.03);
@@ -339,6 +345,8 @@ footer {
 .motivos-images-wrapper { flex: 1; text-align: center; }
 .motivos-img-principal, .motivos-img-secundaria {
     transition: transform 0.4s ease, box-shadow 0.4s ease;
+    max-width: 100%; /* Garante que não ultrapasse o contêiner */
+    height: auto; /* Mantém a proporção */
 }
 .motivos-img-principal:hover, .motivos-img-secundaria:hover {
     transform: scale(1.03) rotate(1deg);
@@ -364,28 +372,173 @@ footer {
 .dream-list li { background-color: var(--dark-color); padding: 20px; margin-bottom: 15px; border-radius: 8px; font-size: 1.1rem; border-left: 5px solid var(--primary-color); transition: transform var(--transition-speed), box-shadow var(--transition-speed); }
 .dream-list li:hover { transform: translateX(10px); box-shadow: 0 5px 20px rgba(0,0,0,0.4); }
 .dreams-image-wrapper { flex: 1; }
-.dreams-image-wrapper img { width: 100%; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+.dreams-image-wrapper img {
+    width: 100%; 
+    max-width: 100%; /* Garante que a imagem não transborde */
+    height: auto; /* Mantém a proporção */
+    border-radius: 8px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    display: block;
+    margin: 0 auto; /* Centraliza a imagem no wrapper */
+}
 .time-capsule-section { background-color: var(--background-light); }
 .time-capsule-section h2 { text-align: center; }
 .time-capsule { background-color: var(--dark-color); border-left: 5px solid var(--primary-color); margin: 20px auto; padding: 30px; max-width: 800px; border-radius: 0 8px 8px 0; }
 .time-capsule strong { color: var(--primary-color); font-size: 1.2rem; display: block; margin-bottom: 10px; }
 
-/* --- Responsividade --- */
+
+/******************************************/
+/* --- RESPONSIVIDADE - PENTE FINO --- */
+/******************************************/
+
+/* TABLETS E TELAS MENORES */
 @media (max-width: 992px) {
-    .motivos-container, .dreams-container { flex-direction: column; }
-    .dreams-section h2 { text-align: center; }
-    .dreams-image-wrapper { margin-top: 40px; }
+    .motivos-container, .dreams-container {
+        flex-direction: column;
+    }
+    .dreams-section h2 {
+        text-align: center;
+    }
+    .dreams-image-wrapper {
+        margin-top: 40px;
+    }
+    .motivos-images-wrapper {
+        margin-top: 40px;
+    }
+    .motivos-img-secundaria {
+        width: 100%; /* Ajuste para preencher a largura total em telas menores */
+    }
 }
+
+/* CELULARES GRANDES E TABLETS NA VERTICAL */
 @media (max-width: 768px) {
-    section { padding: 60px 0; }
-    .hero-title, .page-header h1 { font-size: 3rem; }
-    .main-nav ul { flex-wrap: wrap; gap: 10px; padding: 0 15px; }
-    .main-nav ul li a { margin: 0 10px; }
+    section {
+        padding: 80px 20px; /* Reduz padding vertical e adiciona lateral */
+    }
+    
+    .hero-subtitle { font-size: 1.2rem; }
+    .stat-number { font-size: 2rem; }
+    .stat-label { font-size: 0.8rem; }
+    #dedication-text { font-size: 1.5rem; }
+
+    h2, .page-header h1, .highlights-section h2, .invitation-content h2 {
+        font-size: clamp(2rem, 7vw, 2.5rem); /* Fonte Fluída para todos os H2 */
+        line-height: 1.2;
+    }
+    
+    .invitation-content p, .intro-section p, .page-header p {
+        font-size: 1rem;
+    }
+
+    .main-nav ul {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 0 15px;
+    }
+    .main-nav ul li a {
+        margin: 0 10px;
+    }
+
     .timeline::after { left: 20px; }
     .timeline-item { width: 100%; padding-left: 50px; padding-right: 0; }
     .timeline-item:nth-child(even) { left: 0; }
     .timeline-item::after { left: 10px; }
-    .countdown-container { flex-wrap: wrap; }
+    
+    .countdown-container { flex-wrap: wrap; gap: 15px; }
     .countdown-el { min-width: 100px; padding: 15px;}
     .countdown-el span { font-size: 3rem; }
+}
+
+/* CELULARES PEQUENOS */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 15px; /* Reduz ainda mais o padding lateral */
+    }
+    .hero-stats-container {
+        gap: 15px;
+    }
+    .stat-item {
+        flex-basis: 40%; /* Faz os contadores ficarem em duas colunas */
+    }
+    .stat-number {
+        font-size: 1.8rem;
+    }
+    .stat-label {
+        font-size: 0.7rem;
+    }
+    .main-nav ul li a {
+        font-size: 1rem;
+    }
+    .countdown-el {
+        flex-basis: 45%; /* Contagem em duas colunas */
+        min-width: auto;
+    }
+    .motivos-list li {
+        padding-left: 50px; /* Ajuste para o número do motivo */
+        font-size: 1rem;
+    }
+    .motivos-list li::before {
+        font-size: 2rem; /* Ajuste do tamanho do número */
+    }
+}
+
+/* AJUSTE PARA CELULAR NA HORIZONTAL (MODO PAISAGEM) */
+@media (max-height: 500px) and (orientation: landscape) {
+    .hero {
+        padding: 20px;
+        height: auto; /* Permite que o hero se ajuste à altura do conteúdo */
+        min-height: 100vh; /* Garante que ainda ocupe a tela inteira se houver espaço */
+    }
+    .hero-content {
+        padding: 40px 0; /* Adiciona um pouco de espaço para não grudar */
+    }
+    .hero-title {
+        font-size: 2.5rem;
+        margin-bottom: 0.2rem;
+    }
+    .hero-subtitle {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+    }
+    .hero-stats-container {
+        margin: 0.5rem 0;
+        gap: 15px;
+    }
+    .stat-number {
+        font-size: 1.5rem;
+    }
+    .stat-label {
+        font-size: 0.6rem;
+    }
+    .stats-conclusion {
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+    }
+    .scroll-down-arrow {
+        display: none; /* Esconde a seta em telas baixas */
+    }
+
+    /* Ajuste para navegação em paisagem */
+    .main-nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 10px;
+    }
+    .main-nav ul li a {
+        margin: 5px 8px;
+        font-size: 0.9rem;
+    }
+    /* Reduz o padding das seções para otimizar o espaço vertical */
+    section {
+        padding: 40px 20px;
+    }
+    .page-header {
+        padding: 40px 0;
+    }
+    .page-header h1 {
+        font-size: 2.5rem;
+    }
+    .page-header p {
+        font-size: 1rem;
+    }
 }
